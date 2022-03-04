@@ -25,7 +25,7 @@ namespace Autoclicker
         private CancellationTokenSource cts;
         private int mouseButton;
         const int MYACTION_HOTKEY_ID = 1;
-        private Keys[] script;
+        private char[] script;
         public AutoClicker()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace Autoclicker
             this.isStarted = false;
             this.clicksIsCPS = true;
             this.mouseMode = true;
-            this.script = new Keys[0];
+            this.script = new char[0];
             this.mouseButton = 1;
             WinAPI.RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 0, (int)Keys.F3);
         }
@@ -61,8 +61,7 @@ namespace Autoclicker
                  
                 ct = cts.Token;
                 int mode = (!this.mouseMode) ? 2 : (cbxAddRandomness.Checked) ? 1 : 0;
-                char[] scriptToArray = txtScript.Text.ToCharArray();
-                this.script = new Keys[scriptToArray.Length];
+                this.script = txtScript.Text.ToCharArray();
                 /*for (int i = 0; i < scriptToArray.Length; i++) {
                     this.script[i] = (Keys)scriptToArray[i];
                     MessageBox.Show("test: " + this.script[i].ToString());
@@ -71,10 +70,8 @@ namespace Autoclicker
 
                     t = new Task(()=>
                 {
-                    Keys[] script = this.script;
                     uint mouseDown = 0;
                     uint mouseUp = 0;
-                    
                     switch (mouseButton) {
                         case 1:
                             mouseDown = (uint)WinAPI.MouseEventFlags.LEFTDOWN;
@@ -117,16 +114,11 @@ namespace Autoclicker
                         case 2:
                             //keyboard script
                             int i = 0;
-
                             while (!ct.IsCancellationRequested)
                             {
-                                //TODO: add keydown
-                                //TODO: add keyup
-
-                                //WinAPI.SendInput(this.script.Length, (short)Keys.Control, Marshal.SizeOf(typeof(INPUT));
-                                if (i == this.script.Length)
+                                if (i == this.script.Length) ///oop
                                     i = 0;
-                                SendKeys.SendWait("" + scriptToArray[i]);
+                                SendKeys.SendWait("" + this.script[i]);
                                 i++;
                                 Thread.Sleep(msPerClick);
                             }
@@ -138,8 +130,6 @@ namespace Autoclicker
                 t.Start(); //begin task
             }
         }
-
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             nudRandomness.Enabled = cbxAddRandomness.Checked; //disable numerical up down if unchecked, vice versa
@@ -151,7 +141,6 @@ namespace Autoclicker
         {
             startStop();
         }
-
         //toggle click speed to use value as raw ms
         private void lblClickSwap_Click(object sender, EventArgs e)
         {
@@ -170,7 +159,6 @@ namespace Autoclicker
         private void updateCPSestimate(object sender, EventArgs e)
         {
             updateMaxCPS();
-            
         }
         
         private void updateMaxCPS() {
@@ -252,12 +240,6 @@ namespace Autoclicker
         {
             this.mouseButton = cbxMouseClick.SelectedIndex+1;
         }
-
-        private void txtScript_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void rdbMouse_CheckedChanged(object sender, EventArgs e)
         {
             this.mouseMode = true;
@@ -271,12 +253,8 @@ namespace Autoclicker
         {
             this.mouseMode = false;
             txtScript.Enabled = true;
-            /*cbxMouseClick.Enabled = false;
-            nudClickSpeed.Enabled = false;
-            lblClickRate.Enabled = false;*/
         }
     } 
-
     }
     public static class WinAPI {
 
@@ -304,20 +282,4 @@ namespace Autoclicker
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-        //Keyboard Functions
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct KeyboardInput
-        {
-            public ushort wVk;
-            public ushort wScan;
-            public uint dwFlags;
-            public uint time;
-            public IntPtr dwExtraInfo;
-        }
-        
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern uint SendInput(uint nInputs, KeyboardInput[] pInputs, int cbSize);
-
-        
 }
