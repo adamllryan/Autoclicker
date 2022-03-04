@@ -42,134 +42,131 @@ namespace Autoclicker
         /// </summary>
         private void InitializeComponent()
         {
-            this.hotkey = Keys.F3;
-            this.modifiers = 0;
-            this.isStarted = false;
-            this.clicksIsCPS = true;
             this.btnStart = new System.Windows.Forms.Button();
-            this.lblStartStop = new System.Windows.Forms.Label();
-            this.lblClickSpeed = new System.Windows.Forms.Label();
+            this.ttlStartStop = new System.Windows.Forms.Label();
+            this.ttlClickSpeed = new System.Windows.Forms.Label();
             this.lblClickRate = new System.Windows.Forms.Label();
             this.lblPlusMinus = new System.Windows.Forms.Label();
             this.lblRandomness = new System.Windows.Forms.Label();
-            this.btnClickSwap = new System.Windows.Forms.Button();
             this.cbxAddRandomness = new System.Windows.Forms.CheckBox();
             this.nudClickSpeed = new System.Windows.Forms.NumericUpDown();
             this.nudRandomness = new System.Windows.Forms.NumericUpDown();
             this.lblcurrentCPS = new System.Windows.Forms.Label();
-            this.lblMaxMin = new System.Windows.Forms.Label();
+            this.lblCPSCounter = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pnlHost = new System.Windows.Forms.Panel();
+            this.ttlClickMode = new System.Windows.Forms.Label();
+            this.pnlClickType = new System.Windows.Forms.Panel();
+            this.cbxMouseClick = new System.Windows.Forms.ComboBox();
+            this.rdbMouse = new System.Windows.Forms.RadioButton();
+            this.rdbText = new System.Windows.Forms.RadioButton();
+            this.ttlTypeScript = new System.Windows.Forms.Label();
+            this.pnlTypeScript = new System.Windows.Forms.Panel();
+            this.txtScript = new System.Windows.Forms.TextBox();
+            this.pnlStartStop = new System.Windows.Forms.Panel();
             this.btnStop = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.cbxModifiers = new System.Windows.Forms.CheckedListBox();
+            this.ttlCPS = new System.Windows.Forms.Label();
+            this.ttlHotkey = new System.Windows.Forms.Label();
+            this.pnlClickSpeed = new System.Windows.Forms.Panel();
+            this.pnlHotkey = new System.Windows.Forms.Panel();
+            this.cbxSuper = new System.Windows.Forms.CheckBox();
+            this.cbxShift = new System.Windows.Forms.CheckBox();
+            this.cbxAlt = new System.Windows.Forms.CheckBox();
+            this.cbxCtrl = new System.Windows.Forms.CheckBox();
             this.txtHotkey = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudClickSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRandomness)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.pnlHost.SuspendLayout();
+            this.pnlClickType.SuspendLayout();
+            this.pnlTypeScript.SuspendLayout();
+            this.pnlStartStop.SuspendLayout();
+            this.pnlClickSpeed.SuspendLayout();
+            this.pnlHotkey.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStart
             // 
             this.btnStart.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnStart.Location = new System.Drawing.Point(50, 50);
+            this.btnStart.Location = new System.Drawing.Point(30, 30);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(150, 55);
+            this.btnStart.Size = new System.Drawing.Size(190, 75);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.StartStopClicked);
             // 
-            // lblStartStop
+            // ttlStartStop
             // 
-            this.lblStartStop.AutoSize = true;
-            this.lblStartStop.Location = new System.Drawing.Point(850, 15);
-            this.lblStartStop.Name = "lblStartStop";
-            this.lblStartStop.Size = new System.Drawing.Size(119, 32);
-            this.lblStartStop.TabIndex = 3;
-            this.lblStartStop.Text = "Start/Stop";
+            this.ttlStartStop.AutoSize = true;
+            this.ttlStartStop.Location = new System.Drawing.Point(729, 15);
+            this.ttlStartStop.Name = "ttlStartStop";
+            this.ttlStartStop.Size = new System.Drawing.Size(119, 32);
+            this.ttlStartStop.TabIndex = 3;
+            this.ttlStartStop.Text = "Start/Stop";
             // 
-            // lblClickSpeed
+            // ttlClickSpeed
             // 
-            this.lblClickSpeed.AutoSize = true;
-            this.lblClickSpeed.Location = new System.Drawing.Point(50, 15);
-            this.lblClickSpeed.Name = "lblClickSpeed";
-            this.lblClickSpeed.Size = new System.Drawing.Size(150, 32);
-            this.lblClickSpeed.TabIndex = 4;
-            this.lblClickSpeed.Text = "Click Speed: ";
+            this.ttlClickSpeed.AutoSize = true;
+            this.ttlClickSpeed.Location = new System.Drawing.Point(50, 15);
+            this.ttlClickSpeed.Name = "ttlClickSpeed";
+            this.ttlClickSpeed.Size = new System.Drawing.Size(173, 32);
+            this.ttlClickSpeed.TabIndex = 4;
+            this.ttlClickSpeed.Text = "Repeat Interval";
             // 
             // lblClickRate
             // 
             this.lblClickRate.AutoSize = true;
-            this.lblClickRate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblClickRate.Location = new System.Drawing.Point(156, 52);
+            this.lblClickRate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblClickRate.Location = new System.Drawing.Point(131, 30);
             this.lblClickRate.Name = "lblClickRate";
-            this.lblClickRate.Size = new System.Drawing.Size(230, 45);
+            this.lblClickRate.Size = new System.Drawing.Size(188, 32);
             this.lblClickRate.TabIndex = 5;
-            this.lblClickRate.Text = "click(s)/second";
+            this.lblClickRate.Text = "action(s)/second";
+            this.lblClickRate.Click += new System.EventHandler(this.lblClickSwap_Click);
             // 
             // lblPlusMinus
             // 
             this.lblPlusMinus.AutoSize = true;
-            this.lblPlusMinus.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblPlusMinus.Location = new System.Drawing.Point(50, 150);
+            this.lblPlusMinus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPlusMinus.Location = new System.Drawing.Point(59, 90);
             this.lblPlusMinus.Name = "lblPlusMinus";
-            this.lblPlusMinus.Size = new System.Drawing.Size(42, 45);
+            this.lblPlusMinus.Size = new System.Drawing.Size(30, 32);
             this.lblPlusMinus.TabIndex = 7;
             this.lblPlusMinus.Text = "±";
             // 
             // lblRandomness
             // 
             this.lblRandomness.AutoSize = true;
-            this.lblRandomness.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblRandomness.Location = new System.Drawing.Point(156, 250);
+            this.lblRandomness.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblRandomness.Location = new System.Drawing.Point(192, 92);
             this.lblRandomness.Name = "lblRandomness";
-            this.lblRandomness.Size = new System.Drawing.Size(46, 45);
+            this.lblRandomness.Size = new System.Drawing.Size(133, 32);
             this.lblRandomness.TabIndex = 8;
-            this.lblRandomness.Text = "%";
-            // 
-            // btnClickSwap
-            // 
-            this.btnClickSwap.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnClickSwap.Location = new System.Drawing.Point(250, 250);
-            this.btnClickSwap.Name = "btnClickSwap";
-            this.btnClickSwap.Size = new System.Drawing.Size(125, 55);
-            this.btnClickSwap.TabIndex = 9;
-            this.btnClickSwap.Text = "Swap";
-            this.btnClickSwap.UseVisualStyleBackColor = true;
-            this.btnClickSwap.Click += new System.EventHandler(this.btnClickSwap_Click);
+            this.lblRandomness.Text = "% variation";
             // 
             // cbxAddRandomness
             // 
             this.cbxAddRandomness.AutoSize = true;
-            this.cbxAddRandomness.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbxAddRandomness.Location = new System.Drawing.Point(95, 150);
+            this.cbxAddRandomness.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cbxAddRandomness.Location = new System.Drawing.Point(25, 94);
             this.cbxAddRandomness.Name = "cbxAddRandomness";
-            this.cbxAddRandomness.Size = new System.Drawing.Size(316, 49);
+            this.cbxAddRandomness.Size = new System.Drawing.Size(28, 27);
             this.cbxAddRandomness.TabIndex = 11;
-            this.cbxAddRandomness.Text = "Add Randomness?";
             this.cbxAddRandomness.UseVisualStyleBackColor = true;
             this.cbxAddRandomness.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // nudClickSpeed
             // 
-            this.nudClickSpeed.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.nudClickSpeed.Location = new System.Drawing.Point(50, 50);
+            this.nudClickSpeed.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudClickSpeed.Location = new System.Drawing.Point(25, 30);
             this.nudClickSpeed.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudClickSpeed.Name = "nudClickSpeed";
-            this.nudClickSpeed.Size = new System.Drawing.Size(100, 50);
+            this.nudClickSpeed.Size = new System.Drawing.Size(100, 39);
             this.nudClickSpeed.TabIndex = 12;
             this.nudClickSpeed.Value = new decimal(new int[] {
             1,
@@ -181,15 +178,15 @@ namespace Autoclicker
             // nudRandomness
             // 
             this.nudRandomness.Enabled = false;
-            this.nudRandomness.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.nudRandomness.Location = new System.Drawing.Point(50, 250);
+            this.nudRandomness.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.nudRandomness.Location = new System.Drawing.Point(86, 88);
             this.nudRandomness.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudRandomness.Name = "nudRandomness";
-            this.nudRandomness.Size = new System.Drawing.Size(100, 50);
+            this.nudRandomness.Size = new System.Drawing.Size(100, 39);
             this.nudRandomness.TabIndex = 13;
             this.nudRandomness.Value = new decimal(new int[] {
             1,
@@ -206,141 +203,262 @@ namespace Autoclicker
             this.lblcurrentCPS.Size = new System.Drawing.Size(0, 32);
             this.lblcurrentCPS.TabIndex = 14;
             // 
-            // lblMaxMin
+            // lblCPSCounter
             // 
-            this.lblMaxMin.AutoSize = true;
-            this.lblMaxMin.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblMaxMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblMaxMin.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblMaxMin.Location = new System.Drawing.Point(34, 250);
-            this.lblMaxMin.Name = "lblMaxMin";
-            this.lblMaxMin.Size = new System.Drawing.Size(187, 88);
-            this.lblMaxMin.TabIndex = 15;
-            this.lblMaxMin.Text = "1 cps";
+            this.lblCPSCounter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblCPSCounter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblCPSCounter.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblCPSCounter.Location = new System.Drawing.Point(710, 285);
+            this.lblCPSCounter.Name = "lblCPSCounter";
+            this.lblCPSCounter.Size = new System.Drawing.Size(255, 53);
+            this.lblCPSCounter.TabIndex = 15;
+            this.lblCPSCounter.Text = "1.00±0.00";
+            this.lblCPSCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.panel5);
+            this.flowLayoutPanel1.Controls.Add(this.pnlHost);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1138, 425);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1307, 373);
             this.flowLayoutPanel1.TabIndex = 16;
             // 
-            // panel5
+            // pnlHost
             // 
-            this.panel5.Controls.Add(this.lblStartStop);
-            this.panel5.Controls.Add(this.panel3);
-            this.panel5.Controls.Add(this.lblClickSpeed);
-            this.panel5.Controls.Add(this.label3);
-            this.panel5.Controls.Add(this.panel1);
-            this.panel5.Controls.Add(this.panel4);
-            this.panel5.Location = new System.Drawing.Point(3, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Padding = new System.Windows.Forms.Padding(50);
-            this.panel5.Size = new System.Drawing.Size(1159, 423);
-            this.panel5.TabIndex = 18;
+            this.pnlHost.Controls.Add(this.ttlClickMode);
+            this.pnlHost.Controls.Add(this.pnlClickType);
+            this.pnlHost.Controls.Add(this.ttlTypeScript);
+            this.pnlHost.Controls.Add(this.pnlTypeScript);
+            this.pnlHost.Controls.Add(this.ttlStartStop);
+            this.pnlHost.Controls.Add(this.pnlStartStop);
+            this.pnlHost.Controls.Add(this.ttlCPS);
+            this.pnlHost.Controls.Add(this.ttlClickSpeed);
+            this.pnlHost.Controls.Add(this.lblCPSCounter);
+            this.pnlHost.Controls.Add(this.ttlHotkey);
+            this.pnlHost.Controls.Add(this.pnlClickSpeed);
+            this.pnlHost.Controls.Add(this.pnlHotkey);
+            this.pnlHost.Location = new System.Drawing.Point(0, 0);
+            this.pnlHost.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlHost.Name = "pnlHost";
+            this.pnlHost.Padding = new System.Windows.Forms.Padding(30);
+            this.pnlHost.Size = new System.Drawing.Size(1309, 375);
+            this.pnlHost.TabIndex = 18;
             // 
-            // panel3
+            // ttlClickMode
             // 
-            this.panel3.AutoSize = true;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.btnStart);
-            this.panel3.Controls.Add(this.btnStop);
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Controls.Add(this.lblMaxMin);
-            this.panel3.Location = new System.Drawing.Point(831, 30);
-            this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(50, 50, 30, 15);
-            this.panel3.Size = new System.Drawing.Size(276, 360);
-            this.panel3.TabIndex = 10;
+            this.ttlClickMode.AutoSize = true;
+            this.ttlClickMode.Location = new System.Drawing.Point(56, 200);
+            this.ttlClickMode.Name = "ttlClickMode";
+            this.ttlClickMode.Size = new System.Drawing.Size(122, 32);
+            this.ttlClickMode.TabIndex = 23;
+            this.ttlClickMode.Text = "Click Type";
+            // 
+            // pnlClickType
+            // 
+            this.pnlClickType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlClickType.Controls.Add(this.cbxMouseClick);
+            this.pnlClickType.Controls.Add(this.rdbMouse);
+            this.pnlClickType.Controls.Add(this.rdbText);
+            this.pnlClickType.Location = new System.Drawing.Point(30, 216);
+            this.pnlClickType.Name = "pnlClickType";
+            this.pnlClickType.Size = new System.Drawing.Size(371, 127);
+            this.pnlClickType.TabIndex = 22;
+            // 
+            // cbxMouseClick
+            // 
+            this.cbxMouseClick.FormattingEnabled = true;
+            this.cbxMouseClick.Items.AddRange(new object[] {
+            "Left",
+            "Right",
+            "Middle"});
+            this.cbxMouseClick.Location = new System.Drawing.Point(60, 43);
+            this.cbxMouseClick.Name = "cbxMouseClick";
+            this.cbxMouseClick.Size = new System.Drawing.Size(120, 40);
+            this.cbxMouseClick.TabIndex = 2;
+            this.cbxMouseClick.Text = "Left";
+            this.cbxMouseClick.SelectedIndexChanged += new System.EventHandler(this.cbxMouseClick_SelectedIndexChanged);
+            // 
+            // rdbMouse
+            // 
+            this.rdbMouse.AutoSize = true;
+            this.rdbMouse.Checked = true;
+            this.rdbMouse.Location = new System.Drawing.Point(26, 49);
+            this.rdbMouse.Margin = new System.Windows.Forms.Padding(30);
+            this.rdbMouse.Name = "rdbMouse";
+            this.rdbMouse.Size = new System.Drawing.Size(27, 26);
+            this.rdbMouse.TabIndex = 0;
+            this.rdbMouse.TabStop = true;
+            this.rdbMouse.UseVisualStyleBackColor = true;
+            this.rdbMouse.CheckedChanged += new System.EventHandler(this.rdbMouse_CheckedChanged);
+            // 
+            // rdbText
+            // 
+            this.rdbText.AutoSize = true;
+            this.rdbText.Location = new System.Drawing.Point(213, 47);
+            this.rdbText.Name = "rdbText";
+            this.rdbText.Size = new System.Drawing.Size(88, 36);
+            this.rdbText.TabIndex = 1;
+            this.rdbText.Text = "Text";
+            this.rdbText.UseVisualStyleBackColor = true;
+            this.rdbText.CheckedChanged += new System.EventHandler(this.rdbText_CheckedChanged);
+            // 
+            // ttlTypeScript
+            // 
+            this.ttlTypeScript.AutoSize = true;
+            this.ttlTypeScript.Location = new System.Drawing.Point(1013, 15);
+            this.ttlTypeScript.Name = "ttlTypeScript";
+            this.ttlTypeScript.Size = new System.Drawing.Size(132, 32);
+            this.ttlTypeScript.TabIndex = 21;
+            this.ttlTypeScript.Text = "Type Script";
+            // 
+            // pnlTypeScript
+            // 
+            this.pnlTypeScript.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTypeScript.Controls.Add(this.txtScript);
+            this.pnlTypeScript.Location = new System.Drawing.Point(998, 30);
+            this.pnlTypeScript.Margin = new System.Windows.Forms.Padding(30);
+            this.pnlTypeScript.Name = "pnlTypeScript";
+            this.pnlTypeScript.Size = new System.Drawing.Size(278, 313);
+            this.pnlTypeScript.TabIndex = 19;
+            // 
+            // txtScript
+            // 
+            this.txtScript.Enabled = false;
+            this.txtScript.Location = new System.Drawing.Point(30, 30);
+            this.txtScript.Margin = new System.Windows.Forms.Padding(30);
+            this.txtScript.Multiline = true;
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(216, 251);
+            this.txtScript.TabIndex = 0;
+            // 
+            // pnlStartStop
+            // 
+            this.pnlStartStop.AutoSize = true;
+            this.pnlStartStop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlStartStop.Controls.Add(this.btnStart);
+            this.pnlStartStop.Controls.Add(this.btnStop);
+            this.pnlStartStop.Location = new System.Drawing.Point(710, 30);
+            this.pnlStartStop.Margin = new System.Windows.Forms.Padding(30);
+            this.pnlStartStop.Name = "pnlStartStop";
+            this.pnlStartStop.Size = new System.Drawing.Size(255, 225);
+            this.pnlStartStop.TabIndex = 10;
             // 
             // btnStop
             // 
             this.btnStop.Enabled = false;
             this.btnStop.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnStop.Location = new System.Drawing.Point(50, 150);
+            this.btnStop.Location = new System.Drawing.Point(30, 115);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(150, 55);
+            this.btnStop.Size = new System.Drawing.Size(190, 75);
             this.btnStop.TabIndex = 9;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.StartStopClicked);
             // 
-            // label4
+            // ttlCPS
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(43, 226);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 45);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "CPS";
+            this.ttlCPS.AutoSize = true;
+            this.ttlCPS.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ttlCPS.Location = new System.Drawing.Point(720, 253);
+            this.ttlCPS.Name = "ttlCPS";
+            this.ttlCPS.Size = new System.Drawing.Size(75, 45);
+            this.ttlCPS.TabIndex = 16;
+            this.ttlCPS.Text = "CPS";
             // 
-            // label3
+            // ttlHotkey
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(550, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 32);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Hotkey: ";
+            this.ttlHotkey.AutoSize = true;
+            this.ttlHotkey.Location = new System.Drawing.Point(447, 15);
+            this.ttlHotkey.Name = "ttlHotkey";
+            this.ttlHotkey.Size = new System.Drawing.Size(90, 32);
+            this.ttlHotkey.TabIndex = 5;
+            this.ttlHotkey.Text = "Hotkey";
             // 
-            // panel1
+            // pnlClickSpeed
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.nudClickSpeed);
-            this.panel1.Controls.Add(this.lblClickRate);
-            this.panel1.Controls.Add(this.nudRandomness);
-            this.panel1.Controls.Add(this.lblPlusMinus);
-            this.panel1.Controls.Add(this.btnClickSwap);
-            this.panel1.Controls.Add(this.cbxAddRandomness);
-            this.panel1.Controls.Add(this.lblRandomness);
-            this.panel1.Location = new System.Drawing.Point(30, 30);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(50);
-            this.panel1.Size = new System.Drawing.Size(466, 360);
-            this.panel1.TabIndex = 17;
+            this.pnlClickSpeed.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlClickSpeed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlClickSpeed.Controls.Add(this.nudClickSpeed);
+            this.pnlClickSpeed.Controls.Add(this.lblClickRate);
+            this.pnlClickSpeed.Controls.Add(this.nudRandomness);
+            this.pnlClickSpeed.Controls.Add(this.lblPlusMinus);
+            this.pnlClickSpeed.Controls.Add(this.cbxAddRandomness);
+            this.pnlClickSpeed.Controls.Add(this.lblRandomness);
+            this.pnlClickSpeed.Location = new System.Drawing.Point(30, 30);
+            this.pnlClickSpeed.Margin = new System.Windows.Forms.Padding(30);
+            this.pnlClickSpeed.Name = "pnlClickSpeed";
+            this.pnlClickSpeed.Padding = new System.Windows.Forms.Padding(30);
+            this.pnlClickSpeed.Size = new System.Drawing.Size(371, 153);
+            this.pnlClickSpeed.TabIndex = 17;
             // 
-            // panel4
+            // pnlHotkey
             // 
-            this.panel4.AutoScrollMargin = new System.Drawing.Size(50, 50);
-            this.panel4.AutoSize = true;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.cbxModifiers);
-            this.panel4.Controls.Add(this.txtHotkey);
-            this.panel4.Location = new System.Drawing.Point(535, 30);
-            this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(50);
-            this.panel4.Size = new System.Drawing.Size(257, 360);
-            this.panel4.TabIndex = 3;
+            this.pnlHotkey.AutoScrollMargin = new System.Drawing.Size(50, 50);
+            this.pnlHotkey.AutoSize = true;
+            this.pnlHotkey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHotkey.Controls.Add(this.cbxSuper);
+            this.pnlHotkey.Controls.Add(this.cbxShift);
+            this.pnlHotkey.Controls.Add(this.cbxAlt);
+            this.pnlHotkey.Controls.Add(this.cbxCtrl);
+            this.pnlHotkey.Controls.Add(this.txtHotkey);
+            this.pnlHotkey.Location = new System.Drawing.Point(432, 30);
+            this.pnlHotkey.Margin = new System.Windows.Forms.Padding(30);
+            this.pnlHotkey.Name = "pnlHotkey";
+            this.pnlHotkey.Padding = new System.Windows.Forms.Padding(30);
+            this.pnlHotkey.Size = new System.Drawing.Size(248, 313);
+            this.pnlHotkey.TabIndex = 3;
             // 
-            // cbxModifiers
+            // cbxSuper
             // 
-            this.cbxModifiers.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.cbxModifiers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.cbxModifiers.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbxModifiers.FormattingEnabled = true;
-            this.cbxModifiers.Items.AddRange(new object[] {
-            "Ctrl",
-            "Alt",
-            "Shift",
-            "Super"});
-            this.cbxModifiers.Location = new System.Drawing.Point(50, 50);
-            this.cbxModifiers.Margin = new System.Windows.Forms.Padding(5);
-            this.cbxModifiers.Name = "cbxModifiers";
-            this.cbxModifiers.Size = new System.Drawing.Size(150, 188);
-            this.cbxModifiers.TabIndex = 10;
-            this.cbxModifiers.ThreeDCheckBoxes = true;
-            this.cbxModifiers.SelectedIndexChanged += new System.EventHandler(this.cbxModifiers_SelectedIndexChanged);
+            this.cbxSuper.AutoSize = true;
+            this.cbxSuper.Location = new System.Drawing.Point(42, 172);
+            this.cbxSuper.Name = "cbxSuper";
+            this.cbxSuper.Size = new System.Drawing.Size(171, 36);
+            this.cbxSuper.TabIndex = 12;
+            this.cbxSuper.Text = "Super (Win)";
+            this.cbxSuper.UseVisualStyleBackColor = true;
+            this.cbxSuper.CheckedChanged += new System.EventHandler(this.cbxSuper_CheckedChanged);
+            // 
+            // cbxShift
+            // 
+            this.cbxShift.AutoSize = true;
+            this.cbxShift.Location = new System.Drawing.Point(42, 130);
+            this.cbxShift.Name = "cbxShift";
+            this.cbxShift.Size = new System.Drawing.Size(95, 36);
+            this.cbxShift.TabIndex = 11;
+            this.cbxShift.Text = "Shift";
+            this.cbxShift.UseVisualStyleBackColor = true;
+            this.cbxShift.CheckedChanged += new System.EventHandler(this.cbxShift_CheckedChanged);
+            // 
+            // cbxAlt
+            // 
+            this.cbxAlt.AutoSize = true;
+            this.cbxAlt.Location = new System.Drawing.Point(42, 88);
+            this.cbxAlt.Name = "cbxAlt";
+            this.cbxAlt.Size = new System.Drawing.Size(75, 36);
+            this.cbxAlt.TabIndex = 10;
+            this.cbxAlt.Text = "Alt";
+            this.cbxAlt.UseVisualStyleBackColor = true;
+            this.cbxAlt.CheckedChanged += new System.EventHandler(this.cbxAlt_CheckedChanged);
+            // 
+            // cbxCtrl
+            // 
+            this.cbxCtrl.AutoSize = true;
+            this.cbxCtrl.Location = new System.Drawing.Point(42, 46);
+            this.cbxCtrl.Name = "cbxCtrl";
+            this.cbxCtrl.Size = new System.Drawing.Size(125, 36);
+            this.cbxCtrl.TabIndex = 9;
+            this.cbxCtrl.Text = "Control";
+            this.cbxCtrl.UseVisualStyleBackColor = true;
+            this.cbxCtrl.CheckedChanged += new System.EventHandler(this.cbxCtrl_CheckedChanged);
             // 
             // txtHotkey
             // 
             this.txtHotkey.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtHotkey.Location = new System.Drawing.Point(50, 250);
+            this.txtHotkey.Location = new System.Drawing.Point(33, 228);
             this.txtHotkey.Name = "txtHotkey";
             this.txtHotkey.Size = new System.Drawing.Size(150, 50);
             this.txtHotkey.TabIndex = 8;
@@ -352,8 +470,9 @@ namespace Autoclicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1138, 425);
+            this.ClientSize = new System.Drawing.Size(1307, 373);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.lblcurrentCPS);
             this.KeyPreview = true;
@@ -362,14 +481,17 @@ namespace Autoclicker
             ((System.ComponentModel.ISupportInitialize)(this.nudClickSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRandomness)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.pnlHost.ResumeLayout(false);
+            this.pnlHost.PerformLayout();
+            this.pnlClickType.ResumeLayout(false);
+            this.pnlClickType.PerformLayout();
+            this.pnlTypeScript.ResumeLayout(false);
+            this.pnlTypeScript.PerformLayout();
+            this.pnlStartStop.ResumeLayout(false);
+            this.pnlClickSpeed.ResumeLayout(false);
+            this.pnlClickSpeed.PerformLayout();
+            this.pnlHotkey.ResumeLayout(false);
+            this.pnlHotkey.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -378,26 +500,36 @@ namespace Autoclicker
         #endregion
 
         private Button btnStart;
-        private Label lblStartStop;
-        private Label lblClickSpeed;
+        private Label ttlStartStop;
+        private Label ttlClickSpeed;
         private Label lblClickRate;
         private Label lblPlusMinus;
         private Label lblRandomness;
-        private Button btnClickSwap;
         private CheckBox cbxAddRandomness;
         private NumericUpDown nudClickSpeed;
         private NumericUpDown nudRandomness;
         private Label lblcurrentCPS;
-        private Label lblMaxMin;
+        private Label lblCPSCounter;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Label label3;
+        private Label ttlHotkey;
         private TextBox txtHotkey;
         private Button btnStop;
-        private CheckedListBox cbxModifiers;
-        private Label label4;
-        private Panel panel1;
-        private Panel panel4;
-        private Panel panel3;
-        private Panel panel5;
+        private Label ttlCPS;
+        private Panel pnlClickSpeed;
+        private Panel pnlHotkey;
+        private Panel pnlStartStop;
+        private Panel pnlHost;
+        private CheckBox cbxSuper;
+        private CheckBox cbxShift;
+        private CheckBox cbxAlt;
+        private CheckBox cbxCtrl;
+        private Label ttlTypeScript;
+        private Panel pnlTypeScript;
+        private TextBox txtScript;
+        private ComboBox cbxMouseClick;
+        private RadioButton rdbText;
+        private RadioButton rdbMouse;
+        private Panel pnlClickType;
+        private Label ttlClickMode;
     }
 }

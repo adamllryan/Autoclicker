@@ -15,21 +15,28 @@ namespace Autoclicker
     public partial class AutoClicker : Form
     {
 
-        
+
         // settings
-        private Keys hotkey = Keys.F3;
-        private int modifiers;
-        private bool isStarted;
-        private bool clicksIsCPS;
+        private Keys hotkey;
+        private int[] modifiers;
+        private bool isStarted, clicksIsCPS, mouseMode;
         private Task t;
         private CancellationToken ct;
         private CancellationTokenSource cts;
+        private int mouseButton;
         const int MYACTION_HOTKEY_ID = 1;
+        private Keys[] script;
         public AutoClicker()
         {
             InitializeComponent();
-            
-
+            this.modifiers = new [] { 0, 0, 0, 0};
+            this.hotkey = Keys.F3;
+            this.isStarted = false;
+            this.clicksIsCPS = true;
+            this.mouseMode = true;
+            this.script = new Keys[0];
+            this.mouseButton = 1;
+            WinAPI.RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 0, (int)Keys.F3);
         }
 
 
@@ -42,6 +49,7 @@ namespace Autoclicker
                 btnStart.Enabled = true;
                 this.isStarted = false;
                 cts.Cancel(); //cancel the task
+
             }
             else
             {
@@ -50,22 +58,81 @@ namespace Autoclicker
                 this.isStarted = true;
                 cts = new CancellationTokenSource(); //create new token for task
                 int msPerClick = (int)((!clicksIsCPS) ? nudClickSpeed.Value : 1000 / nudClickSpeed.Value);//calculate ms interval
-                int maxRandom = (int)(nudRandomness.Value / 100) * msPerClick;//calculate random %
-                var r = new Random(); 
+                 
                 ct = cts.Token;
-                t = new Task(() =>
+                int mode = (!this.mouseMode) ? 2 : (cbxAddRandomness.Checked) ? 1 : 0;
+                char[] scriptToArray = txtScript.Text.ToCharArray();
+                this.script = new Keys[scriptToArray.Length];
+                /*for (int i = 0; i < scriptToArray.Length; i++) {
+                    this.script[i] = (Keys)scriptToArray[i];
+                    MessageBox.Show("test: " + this.script[i].ToString());
+                }*/
+                
+
+                    t = new Task(()=>
                 {
-                    while (!ct.IsCancellationRequested)//loop until cancelled
-                    {
-                        //click event, TODO: will add option for other buttons 
-                        WinAPI.mouse_event((uint)WinAPI.MouseEventFlags.LEFTDOWN, 0, 0, 0, 0);
-                        WinAPI.mouse_event((uint)WinAPI.MouseEventFlags.LEFTUP, 0, 0, 0, 0);
-                        if (maxRandom > 0)
-                        {
-                            int rand = (int)(r.NextDouble() * maxRandom * (r.NextDouble() >= 0.5 ? -1 : 1)); //get random
-                            Thread.Sleep(msPerClick + rand);
-                        } else 
-                            Thread.Sleep(msPerClick);
+                    Keys[] script = this.script;
+                    uint mouseDown = 0;
+                    uint mouseUp = 0;
+                    
+                    switch (mouseButton) {
+                        case 1:
+                            mouseDown = (uint)WinAPI.MouseEventFlags.LEFTDOWN;
+                            mouseUp = (uint)WinAPI.MouseEventFlags.LEFTUP;
+                            break;
+                        case 2:
+                            mouseDown = (uint)WinAPI.MouseEventFlags.RIGHTDOWN;
+                            mouseUp = (uint)WinAPI.MouseEventFlags.RIGHTUP;
+                            break;
+                        case 3:
+                            mouseDown = (uint)WinAPI.MouseEventFlags.MIDDLEDOWN;
+                            mouseUp = (uint)WinAPI.MouseEventFlags.MIDDLEUP;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (mode) {
+                        case 0:
+                            //mouse click no random
+                            while (!ct.IsCancellationRequested) {
+                                WinAPI.mouse_event(mouseDown, 0, 0, 0, 0);
+                                WinAPI.mouse_event(mouseUp, 0, 0, 0, 0);
+                                Thread.Sleep(msPerClick);
+                            }
+                            break;
+                        case 1:
+                            //maxRandom is 2* maximum delay added or subtracted so that we don't actually need to do +/-
+                            int maxRandom = (int)(2 * nudRandomness.Value / 100) * msPerClick;
+                            //clickDelay is msPerClick but modified so that it starts at the low range of randomness
+                            int clickDelay = msPerClick - maxRandom/2;
+                            var r = new Random();
+                            //mouse click with random
+                            while (!ct.IsCancellationRequested)
+                            {
+                                WinAPI.mouse_event(mouseDown, 0, 0, 0, 0);
+                                WinAPI.mouse_event(mouseUp, 0, 0, 0, 0);
+                                Thread.Sleep(clickDelay + (int)r.NextInt64(maxRandom));
+                            }
+                            break;
+                        case 2:
+                            //keyboard script
+                            int i = 0;
+
+                            while (!ct.IsCancellationRequested)
+                            {
+                                //TODO: add keydown
+                                //TODO: add keyup
+
+                                //WinAPI.SendInput(this.script.Length, (short)Keys.Control, Marshal.SizeOf(typeof(INPUT));
+                                if (i == this.script.Length)
+                                    i = 0;
+                                SendKeys.SendWait("" + scriptToArray[i]);
+                                i++;
+                                Thread.Sleep(msPerClick);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 });
                 t.Start(); //begin task
@@ -76,6 +143,7 @@ namespace Autoclicker
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             nudRandomness.Enabled = cbxAddRandomness.Checked; //disable numerical up down if unchecked, vice versa
+            updateMaxCPS();
         }
 
 
@@ -85,40 +153,39 @@ namespace Autoclicker
         }
 
         //toggle click speed to use value as raw ms
-        private void btnClickSwap_Click(object sender, EventArgs e)
+        private void lblClickSwap_Click(object sender, EventArgs e)
         {
             if (clicksIsCPS) {
                 clicksIsCPS = false;
-                lblClickRate.Text = "ms/click";
+                lblClickRate.Text = "ms/action";
                 nudClickSpeed.Maximum = 100000; //set cap much higher for slow click rates
             } else {
                 clicksIsCPS = true;
-                lblClickRate.Text = "click(s)/second";
+                lblClickRate.Text = "action(s)/second";
                 nudClickSpeed.Maximum = 100; //max is 100 by default, not sure what the maximum rate is that windows can reliably handle
             }
+            updateMaxCPS();
         }
         //Call when random/speed numerical up down boxes have changed values
         private void updateCPSestimate(object sender, EventArgs e)
         {
             updateMaxCPS();
+            
         }
         
         private void updateMaxCPS() {
             //if mode is ms per clicks then convert to cps
-            int baseCPS = (int)((clicksIsCPS) ? nudClickSpeed.Value : 1000 / nudClickSpeed.Value);
-            double randCPS = (double)(baseCPS * nudRandomness.Value / 100); //multiply by the % random
-            lblMaxMin.Text = baseCPS + (cbxAddRandomness.Checked ? "±" + randCPS : "") + " cps"; //display expected cps
-
+            double baseCPS = (clicksIsCPS) ? (double)nudClickSpeed.Value : 1000 / (double)nudClickSpeed.Value;
+            double randCPS = (baseCPS * (double)nudRandomness.Value / 100.0); //multiply by the % random
+            lblCPSCounter.Text = String.Format("{0:0.00}", baseCPS) + (cbxAddRandomness.Checked ? "±" + String.Format("{0:0.00}", randCPS) : "±0.00"); //display expected cps
         }
 
         //sets all items in form to value of b, items that require further checking can have additional checks
         private void enableAll(bool b) {
             nudClickSpeed.Enabled = b;
             nudRandomness.Enabled = cbxAddRandomness.Checked ? b : false;
-            btnClickSwap.Enabled = b;
             btnStart.Enabled = b;
             cbxAddRandomness.Enabled = b;
-            btnClickSwap.Enabled = b;
             
         }
         protected override void WndProc(ref Message m)
@@ -129,31 +196,84 @@ namespace Autoclicker
         }
         private void txtHotkey_TextChanged(object sender, EventArgs e)
         {
-            if (txtHotkey.Text != null || !txtHotkey.Text.Equals("")) {
-                if (Enum.TryParse(txtHotkey.Text.ToUpper(), out hotkey)) //try to parse
-                { 
-                    txtHotkey.ForeColor = hotkey.ToString().Equals("None") ? Color.Red : Color.Black; //if invalid make text color red
-                    updateHotkey(); //reregister hotkey
-                }
+            if (!txtHotkey.Text.Equals("") && txtHotkey.Text.Length < 3 && Enum.TryParse(txtHotkey.Text.ToUpper(), out hotkey)) {
+                txtHotkey.ForeColor = Color.Black; //if invalid make text color red
+                updateHotkey(); //reregister hotkey
+            }
+            else
+            {
+                txtHotkey.ForeColor = Color.Red;
             }
         }
 
-        private void cbxModifiers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Sum: alt = 1, ctrl = 2, shift = 4, super = 8
-            //the sum of each are used to determine which are part of the hotkey
-            this.modifiers = 0;
-            this.modifiers += cbxModifiers.GetItemChecked(0) ? 1 : 0;
-            this.modifiers += cbxModifiers.GetItemChecked(1) ? 2 : 0;
-            this.modifiers += cbxModifiers.GetItemChecked(2) ? 4 : 0;
-            this.modifiers += cbxModifiers.GetItemChecked(3) ? 8 : 0;
-            updateHotkey();
-        }
+        
         private void updateHotkey() {
             if (!WinAPI.UnregisterHotKey(this.Handle, MYACTION_HOTKEY_ID))
                 MessageBox.Show("Unregister failed");
-            if (!WinAPI.RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, this.modifiers, (int)this.hotkey))
-                MessageBox.Show("Register failed");
+            if (!WinAPI.RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, this.modifiers.Sum(), (int)this.hotkey))
+            {
+                MessageBox.Show("Register failed, the hotkey may already be in use. Hotkey reset to default");
+                WinAPI.RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 0, (int)Keys.F3);
+                txtHotkey.Text = "F3";
+                cbxCtrl.Checked = false;
+                cbxAlt.Checked = false;
+                cbxShift.Checked = false;
+                cbxSuper.Checked = false;
+            }
+        }
+
+        //Sum: alt = 1, ctrl = 2, shift = 4, super = 8
+        //the sum of each are used to determine which are part of the hotkey
+        private void cbxAlt_CheckedChanged(object sender, EventArgs e)
+        {
+            this.modifiers[0] = (cbxAlt.Checked) ? 1 : 0;
+            updateHotkey();
+        }
+
+        private void cbxCtrl_CheckedChanged(object sender, EventArgs e)
+        {
+            this.modifiers[1] = (cbxCtrl.Checked) ? 2 : 0;
+            updateHotkey();
+        }
+
+        private void cbxShift_CheckedChanged(object sender, EventArgs e)
+        {
+            this.modifiers[2] = (cbxShift.Checked) ? 4 : 0; 
+            updateHotkey();
+        }
+
+        private void cbxSuper_CheckedChanged(object sender, EventArgs e)
+        {
+            this.modifiers[3] = (cbxSuper.Checked) ? 8 : 0;
+            updateHotkey();
+        }
+
+        private void cbxMouseClick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.mouseButton = cbxMouseClick.SelectedIndex+1;
+        }
+
+        private void txtScript_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rdbMouse_CheckedChanged(object sender, EventArgs e)
+        {
+            this.mouseMode = true;
+            txtScript.Enabled = false;
+            cbxMouseClick.Enabled = true;
+            nudClickSpeed.Enabled = true;
+            lblClickRate.Enabled = true;
+        }
+
+        private void rdbText_CheckedChanged(object sender, EventArgs e)
+        {
+            this.mouseMode = false;
+            txtScript.Enabled = true;
+            /*cbxMouseClick.Enabled = false;
+            nudClickSpeed.Enabled = false;
+            lblClickRate.Enabled = false;*/
         }
     } 
 
@@ -184,5 +304,20 @@ namespace Autoclicker
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        //Keyboard Functions
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct KeyboardInput
+        {
+            public ushort wVk;
+            public ushort wScan;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
         
-    }
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SendInput(uint nInputs, KeyboardInput[] pInputs, int cbSize);
+
+        
+}
